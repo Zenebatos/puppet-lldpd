@@ -68,7 +68,6 @@ class lldpd::config {
     $snmp_socket ? {
       undef   => undef,
       default => "-X ${snmp_socket}",
-      # TODO: Check snmp_socket down the line since I removed some validation here
     },
   ]), ' ')
 

@@ -28,7 +28,7 @@
 # @param interfaces List of interfaces to advertise on.
 # @param package_name The name of the package.
 # @param service_name Name of the service.
-# @param snmp_socket The path or IP & port pair used to establish an SNMP AgentX connection.
+# @param snmp_socket Absolute path to an on-disk snmp socket OR an IP & port pair prefixed with 'tcp:'. Ex: 'tcp:127.0.0.0.1:9001'. Used to establish an SNMP AgentX connection.
 class lldpd (
   $addresses    = undef,
   $chassis_id   = undef,
