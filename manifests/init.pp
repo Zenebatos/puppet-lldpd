@@ -48,7 +48,7 @@ class lldpd (
 
   if $addresses {
     validate_array($addresses)
-    validate_ip_address_array($addresses)
+    validate_ip_address($addresses)
   }
 
   if $chassis_id {
