@@ -1,4 +1,3 @@
-# @!visibility private
 class lldpd::config {
 
   $addresses   = $::lldpd::addresses
@@ -68,10 +67,8 @@ class lldpd::config {
     },
     $snmp_socket ? {
       undef   => undef,
-      default => type($snmp_socket) ? {
-        Type[Tuple] => "-X tcp:${snmp_socket[0]}:${snmp_socket[1]}",
-        default     => "-X ${snmp_socket}",
-      },
+      default => "-X ${snmp_socket}",
+      # TODO: Check snmp_socket down the line since I removed some validation here
     },
   ]), ' ')
 

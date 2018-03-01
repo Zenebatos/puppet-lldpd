@@ -10,3 +10,4 @@ pkg
 log
 coverage
 doc
+.idea/*

@@ -30,21 +30,74 @@
 # @param service_name Name of the service.
 # @param snmp_socket The path or IP & port pair used to establish an SNMP AgentX connection.
 class lldpd (
-  Optional[Array[String, 1]]                                                             $addresses    = undef,
-  Optional[Array[String, 1]]                                                             $chassis_id   = undef,
-  Optional[Integer[1, 4]]                                                                $class        = undef,
-  Variant[Boolean, Enum['force']]                                                        $enable_cdpv1 = false,
-  Variant[Boolean, Enum['force']]                                                        $enable_cdpv2 = false,
-  Variant[Boolean, Enum['force']]                                                        $enable_edp   = false,
-  Variant[Boolean, Enum['force']]                                                        $enable_fdp   = false,
-  Variant[Boolean, Enum['force']]                                                        $enable_lldp  = true,
-  Variant[Boolean, Enum['force']]                                                        $enable_sonmp = false,
-  Boolean                                                                                $enable_snmp  = false,
-  Optional[Array[String, 1]]                                                             $interfaces   = undef,
-  String                                                                                 $package_name = $::lldpd::params::package_name,
-  String                                                                                 $service_name = $::lldpd::params::service_name,
-  Optional[Variant[Stdlib::Absolutepath, Tuple[IP::Address::NoSubnet, Bodgitlib::Port]]] $snmp_socket  = undef,
+  $addresses    = undef,
+  $chassis_id   = undef,
+  $class        = undef,
+  $enable_cdpv1 = false,
+  $enable_cdpv2 = false,
+  $enable_edp   = false,
+  $enable_fdp   = false,
+  $enable_lldp  = true,
+  $enable_sonmp = false,
+  $enable_snmp  = false,
+  $interfaces   = undef,
+  $package_name = $::lldpd::params::package_name,
+  $service_name = $::lldpd::params::service_name,
+  $snmp_socket  = undef,
 ) inherits ::lldpd::params {
+
+  if $addresses {
+    validate_array($addresses)
+    validate_ip_address_array($addresses)
+  }
+
+  if $chassis_id {
+    validate_array($chassis_id)
+    validate_string($chassis_id)
+  }
+
+  if $class {
+    validate_integer($class, 4, 1)
+  }
+
+  if $enable_cdpv1 != "force" {
+    validate_bool($enable_cdpv1)
+  }
+
+  if $enable_cdpv2 != "force" {
+    validate_bool($enable_cdpv2)
+  }
+
+  if $enable_edp != "force" {
+    validate_bool($enable_edp)
+  }
+
+  if $enable_fdp != "force" {
+    validate_bool($enable_fdp)
+  }
+
+  if $enable_lldp != "force" {
+    validate_bool($enable_lldp)
+  }
+
+  if $enable_sonmp != "force" {
+    validate_bool($enable_sonmp)
+  }
+
+  validate_bool($enable_snmp)
+
+  if $interfaces {
+    validate_array($interfaces)
+    validate_string($interfaces)
+  }
+
+  validate_string($package_name)
+
+  validate_string($service_name)
+
+  if $snmp_socket {
+    validate_string($snmp_socket)
+  }
 
   contain ::lldpd::install
   contain ::lldpd::config
