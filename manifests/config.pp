@@ -26,8 +26,14 @@ class lldpd::config {
   if $interfaces {
     $_interfaces = join($interfaces, ',')
   }
-  
+
   $_enable_cdpv = [ $::lldpd::enable_cdpv1, $::lldpd::enable_cdpv2 ]
+  $_false_false = [false, false]
+  $_true_true   = [true, true]
+  $_force_true  = ['force', true]
+  $_true_force  = [true, 'force']
+  $_false_true  = [false, true]
+  $_false_force = [false, 'force']
 
   $flags = join(delete_undef_values([
     $addresses ? {
@@ -43,13 +49,13 @@ class lldpd::config {
       default => "-M ${class}",
     },
     $_enable_cdpv ? {
-      [false, false]   => undef,
-      [true, true]     => '-c',
-      ['force', true]  => '-cc',
-      [true, 'force']  => '-ccc',
-      [false, true]    => '-cccc',
-      [false, 'force'] => '-ccccc',
-      default          => fail('Invalid combination of CDP parameters'),
+      $_false_false => undef,
+      $_true_true   => '-c',
+      $_force_true  => '-cc',
+      $_true_force  => '-ccc',
+      $_false_true  => '-cccc',
+      $_false_force => '-ccccc',
+      default       => fail('Invalid combination of CDP parameters'),
     },
     $::lldpd::enable_edp ? {
       true    => '-e',
