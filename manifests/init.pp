@@ -99,9 +99,9 @@ class lldpd (
     validate_string($snmp_socket)
   }
 
-  contain ::lldpd::install
-  contain ::lldpd::config
-  contain ::lldpd::service
+  class { '::lldpd::install': }
+  class { '::lldpd::config':  }
+  class { '::lldpd::service': }
 
   Class['::lldpd::install'] -> Class['::lldpd::config']
     ~> Class['::lldpd::service']
