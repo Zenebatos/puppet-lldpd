@@ -1,4 +1,3 @@
-# @!visibility private
 class lldpd::service {
 
   $flags = $::osfamily ? {

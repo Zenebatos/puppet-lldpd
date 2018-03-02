@@ -1,4 +1,3 @@
-# @!visibility private
 class lldpd::install {
 
   # OpenBSD has a separate package flavo(u)r with SNMP support
@@ -8,7 +7,7 @@ class lldpd::install {
   }
 
   package { $::lldpd::package_name:
-    ensure => present,
+    ensure => 'installed',
     flavor => $flavor,
   }
 }
