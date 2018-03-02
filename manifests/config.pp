@@ -26,6 +26,8 @@ class lldpd::config {
   if $interfaces {
     $_interfaces = join($interfaces, ',')
   }
+  
+  $_enable_cdpv = [ $::lldpd::enable_cdpv1, $::lldpd::enable_cdpv2 ]
 
   $flags = join(delete_undef_values([
     $addresses ? {
@@ -40,7 +42,7 @@ class lldpd::config {
       undef   => undef,
       default => "-M ${class}",
     },
-    [$::lldpd::enable_cdpv1, $::lldpd::enable_cdpv2] ? {
+    $_enable_cdpv ? {
       [false, false]   => undef,
       [true, true]     => '-c',
       ['force', true]  => '-cc',
