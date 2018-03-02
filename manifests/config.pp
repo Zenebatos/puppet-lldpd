@@ -15,14 +15,26 @@ class lldpd::config {
     recurse => true,
   }
 
+  if $addresses {
+    $_addresses = join($addresses, ',')
+  }
+
+  if $chassis_id {
+    $_chassis_id = join($chassis_id, ',')
+  }
+
+  if $interfaces {
+    $_interfaces = join($interfaces, ',')
+  }
+
   $flags = join(delete_undef_values([
     $addresses ? {
       undef   => undef,
-      default => "-m ${join($addresses, ',')}",
+      default => "-m ${_addresses}",
     },
     $chassis_id ? {
       undef   => undef,
-      default => "-C ${join($chassis_id, ',')}",
+      default => "-C ${_chassis_id}",
     },
     $class ? {
       undef   => undef,
@@ -63,7 +75,7 @@ class lldpd::config {
     },
     $interfaces ? {
       undef   => undef,
-      default => "-I ${join($interfaces, ',')}",
+      default => "-I ${_interfaces}",
     },
     $snmp_socket ? {
       undef   => undef,
