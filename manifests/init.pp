@@ -48,12 +48,10 @@ class lldpd (
 
   if $addresses {
     validate_array($addresses)
-    validate_ip_address($addresses)
   }
 
   if $chassis_id {
     validate_array($chassis_id)
-    validate_string($chassis_id)
   }
 
   if $class {
@@ -88,7 +86,6 @@ class lldpd (
 
   if $interfaces {
     validate_array($interfaces)
-    validate_string($interfaces)
   }
 
   validate_string($package_name)
